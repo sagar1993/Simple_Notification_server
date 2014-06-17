@@ -1,0 +1,35 @@
+<script src="http://localhost:3000/socket.io/socket.io.js"></script>
+<script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+<script>	
+	$(function() {
+		var socket = io.connect('http://localhost:3000');
+	
+		$('#data').text('Start');
+		socket.on('connect', function(){
+		// call the server-side function 'adduser' and send one parameter (value of prompt)
+			socket.emit('Add user', prompt("enter userid"));
+		});
+
+		$('#Notify').click(function(){
+			socket.emit('Notify', prompt("enter userid to notify"));
+		});
+
+		socket.on('Notification', function(){
+			$('#data').text('Got Notification');
+		});
+
+		$('#Text').click(function(){
+			$('#data').text('Notification');
+		});
+
+
+	});
+
+
+	
+	
+</script>
+
+<button id="Notify" type="button">Notify</button>
+<button id="Text" type="button">Change Text</button>
+<h1 id="data">Notification</h1>
